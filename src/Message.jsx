@@ -5,7 +5,9 @@ const Message = ({ message }) => {
   const { type, content, username } = message
   return (
     type === 'incomingNotification'
+      /* Notification, eg. username changes */
       ? <div className="message system">{content}</div>
+      /* Chat message */
       : (
         <div className='message'>
           <span className="message-username">{username}</span>
@@ -14,7 +16,6 @@ const Message = ({ message }) => {
       )
   )
 }
-
 
 Message.propTypes = {
   message: PropTypes.shape({
