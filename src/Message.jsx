@@ -22,7 +22,7 @@ class Message extends Component {
 }
 
 Message.propTypes = {
-  messageData: PropTypes.object.shape({
+  messageData: PropTypes.shape({
     type: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     username: PropTypes.string,
