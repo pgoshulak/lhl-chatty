@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Message extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
   render() {
     const { type, content, username } = this.props.messageData
     return (
@@ -23,6 +19,7 @@ class Message extends Component {
 
 Message.propTypes = {
   messageData: PropTypes.shape({
+    id: PropTypes.any,
     type: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     username: PropTypes.string,
