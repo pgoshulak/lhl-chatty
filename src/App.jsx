@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
-import sampleMessages from './sampleMessages.json'
-
 const SOCKET_ADDRESS = 'ws://localhost:3001'
 
 class App extends Component {
@@ -13,11 +11,12 @@ class App extends Component {
       currentUser: {
         username: 'Anonymous'
       },
-      messages: sampleMessages.messages
+      messages: []
     }
     this.sendNewMessage = this.sendNewMessage.bind(this);
     this.handleUserNameChange = this.handleUserNameChange.bind(this)
     this.handleMessageKeyPress = this.handleMessageKeyPress.bind(this)
+    this.onMessageReceive = this.onMessageReceive.bind(this);
   }
 
   handleUserNameChange(event) {
@@ -46,17 +45,18 @@ class App extends Component {
   }
 
   sendNewMessage(newMessage) {
-    // Generate message id from array length (0-based ids)
-    const id = this.state.messages.length;
-    // Add new message + id to existing messages list
-    const newMessages = this.state.messages.concat({ ...newMessage, id })
-    // Set component state to new messages list
-    this.setState({ messages: newMessages })
     this.socket.send(JSON.stringify(newMessage))
+  }
+
+  onMessageReceive(event) {
+    const message = JSON.parse(event.data);
+    const messages = [...this.state.messages, message]
+    this.setState({ messages })
   }
 
   componentDidMount() {
     this.socket = new WebSocket(SOCKET_ADDRESS)
+    this.socket.onmessage = this.onMessageReceive
   }
 
   render() {
