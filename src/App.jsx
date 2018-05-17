@@ -26,7 +26,7 @@ class App extends Component {
 
     // Send notification to server
     this.sendNewMessage({
-      type: 'incomingNotification',
+      type: 'postNotification',
       content: `${this.state.currentUser.username} changed their name to ${newUserName}`
     })
   }
@@ -36,7 +36,7 @@ class App extends Component {
       // Send message to server
       this.sendNewMessage({
         username: this.state.currentUser.username,
-        type: 'incomingMessage',
+        type: 'postMessage',
         content: event.target.value
       })
       // Clear the message input field

@@ -19,18 +19,35 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  broadcastToAll(wss, {
+    type: 'incomingNotification',
+    content: `User connected (${wss.clients.size} online)`
+  })
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+    broadcastToAll(wss, {
+      type: 'incomingNotification',
+      content: `User disconnected (${wss.clients.size} online)`
+    })
+  });
   
   ws.on('message', (receivedMessage) => {
     const message = JSON.parse(receivedMessage);
-    // Add a UUID to the message
-    message.id = uuidv1();
-    // Broadcast to all clients
-    wss.clients.forEach(function each(client) {
-      client.send(JSON.stringify(message));
-    })
+    // Change message type from client->server ("post") to server->client ("incoming")
+    message.type = message.type.replace('post', 'incoming')
+    broadcastToAll(wss, message)
   })
 });
-  
+
+const broadcastToAll = (wss, message) => {
+  // Add a UUID to the message
+  const newMessage = Object.assign({}, message, {
+    id: uuidv1()
+  });
+  // Send to each of the connection's clients
+  wss.clients.forEach(function each(client) {
+    client.send(JSON.stringify(newMessage));
+  })
+}
