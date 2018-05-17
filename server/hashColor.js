@@ -7,8 +7,8 @@ module.exports = (str) => {
   }
   var colour = '#';
   for (i = 0; i < 3; i++) {
-    // Replaced 0xFF -> 0x88 to ensure colours are dark
-    var value = (hash >> (i * 8)) & 0x88;
+    // Multiple value by 0.75 to ensure colors are dark
+    var value = Math.floor(((hash >> (i * 8)) & 0xFF) * 0.75);
     colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
