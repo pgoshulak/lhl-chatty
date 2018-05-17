@@ -4,7 +4,9 @@
   "description": "Simple and lightweight Boilerplate for ReactJS projects",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
-    "start": "node client-server.js"
+    "start": "node client-server.js",
+    "client": "node client-server.js",
+    "server": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
