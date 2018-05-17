@@ -1,6 +1,7 @@
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidv1 = require('uuid/v1');
+const hashColor = require('./hashColor.js')
 
 // Set the port to 3001
 const PORT = 3001;
@@ -19,9 +20,13 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  ws.id = uuidv1();
+  ws.color = hashColor(ws.id)
+
   broadcastToAll(wss, {
     type: 'incomingNotification',
-    content: `User connected (${wss.clients.size} online)`
+    content: `User connected (${wss.clients.size} online)`,
+    color: ws.color
   })
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
@@ -29,7 +34,8 @@ wss.on('connection', (ws) => {
     console.log('Client disconnected')
     broadcastToAll(wss, {
       type: 'incomingNotification',
-      content: `User disconnected (${wss.clients.size} online)`
+      content: `User disconnected (${wss.clients.size} online)`,
+      color: ws.color
     })
   });
   
@@ -37,6 +43,7 @@ wss.on('connection', (ws) => {
     const message = JSON.parse(receivedMessage);
     // Change message type from client->server ("post") to server->client ("incoming")
     message.type = message.type.replace('post', 'incoming')
+    message.color = ws.color
     broadcastToAll(wss, message)
   })
 });
