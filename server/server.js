@@ -24,18 +24,16 @@ wss.on('connection', (ws) => {
   ws.color = hashColor(ws.id)
 
   broadcastToAll(wss, {
-    type: 'incomingNotification',
-    content: `User connected (${wss.clients.size} online)`,
-    color: ws.color
+    type: 'onlineUserCount',
+    content: wss.clients.size
   })
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
     console.log('Client disconnected')
     broadcastToAll(wss, {
-      type: 'incomingNotification',
-      content: `User disconnected (${wss.clients.size} online)`,
-      color: ws.color
+      type: 'onlineUserCount',
+      content: wss.clients.size
     })
   });
   
