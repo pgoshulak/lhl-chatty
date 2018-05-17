@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ImageContent = ({imgUrl}) => {
-    // Small image should not resize:
-  // https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Grumpy_Cat_by_Gage_Skidmore.jpg/220px-Grumpy_Cat_by_Gage_Skidmore.jpg
-  // Large image should resize down to max 60vw: 
-  // http://getwallpapers.com/wallpaper/full/4/3/5/739783-download-cute-cat-background-1920x1080-for-hd.jpg
+  // Return blank for no image
   if (!imgUrl) {
     return null
   } else {

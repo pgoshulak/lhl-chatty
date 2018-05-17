@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const OnlineUserCount = ({ count }) => {
   const style = {
@@ -10,6 +11,10 @@ const OnlineUserCount = ({ count }) => {
   return (
     <span style={style}>{count} {userText} online </span>
   )
+}
+
+OnlineUserCount.propTypes = {
+  count: PropTypes.number
 }
 
 export default OnlineUserCount;

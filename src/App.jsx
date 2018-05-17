@@ -63,7 +63,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // Open new web socket connection
     this.socket = new WebSocket(SOCKET_ADDRESS)
+    // Assign the message handler
     this.socket.onmessage = this.onMessageReceive
   }
 

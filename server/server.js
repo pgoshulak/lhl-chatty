@@ -21,6 +21,7 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.id = uuidv1();
+  // Generate a random color (#000000 to #BBBBBB) based on the user's UUID
   ws.color = hashColor(ws.id)
 
   broadcastToAll(wss, {
