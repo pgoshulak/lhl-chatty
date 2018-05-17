@@ -1,45 +1,43 @@
-React Boilerplate
-=====================
+# Chatty - Chat client
+A simple chat app built as a React SPA, using WebSockets. Chatty allows users to send messages, change their display name, and send images.
 
-A minimal and light dev environment for ReactJS.
+This project began as an assignment for Lighthouse Labs web development bootcamp, as a way to learn React and WebSockets.
 
-### Usage
+## Features
+### Client-side
+- send messages via websockets
+- change display name
+- send images by pasting a valid image URL
+- see how many users are online
 
-Clone the boilerplate and create your own git repo.
+### Server-side
+- broadcast messages and notifications to all connected clients
+- randomly generate a display color for each connected client
 
+## Screenshots
+![Screenshot of Chatty](./docs/chatty.png)
+
+## Getting Started
+- clone the repository and install dependencies. Note that the server files are located within the client folder, and needs to be installed separately:
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
+$ npm install
+$ cd server
+$ npm install
+$ cd ..
 ```
-
-Install the dependencies and start the server.
-
+- Run the client:
 ```
-npm install
-npm start
-open http://localhost:3000
+$ npm run client
 ```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
+- Run the server in a separate terminal window:
 ```
-npm run lint
+$ npm run server
 ```
 
-### Dependencies
+## Usage
+- Navigate your browser to `http://localhost:3000`
+- You can send messages (including image URLs), or change your display name
+- Try opening the page in multiple tabs!
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+## Issues
+- message list area does not scroll to bottom on receiving new message
